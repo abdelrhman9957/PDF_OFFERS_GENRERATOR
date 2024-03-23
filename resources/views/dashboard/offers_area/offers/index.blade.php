@@ -1,0 +1,89 @@
+@extends('dashboard.layouts.MasterDashMetronic')
+@section('title') العروض @endsection
+@section('css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css" rel="stylesheet">
+@endsection
+@section('content')
+<div class="row" style="margin-top:10px">
+    <div class="col-xl-12">
+        <!--begin::Card-->
+        <div class="card card-custom gutter-b">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label">العروض</h3>
+                </div>
+                @include('dashboard.offers_area.offers.createModal')
+            </div>
+            <div class="card-body">
+                <!--begin::Table-->
+                <div class="example mb-10">
+                    <div class="example-preview">
+                        <div class="table-responsive">
+                            <table class="table table-bordered meals-table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left" scope="col">#</th>
+                                        <th class="text-left" scope="col">ID</th>
+                                        <th class="text-left" scope="col">العرض</th>
+                                        <th class="text-left" scope="col">عدد الصفحات</th>
+                                        <th class="text-left" scope="col">ملاحظات</th>
+                                        <th class="text-left" scope="col">انشيء بواسطه</th>
+                                        <th class="text-left" scope="col">تاريخ الإضافه</th>
+                                        <th class="text-left" scope="col">إجراءات</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <!--end::Table-->
+            </div>
+        </div>
+        <!--end::Card-->
+    </div>
+</div>
+@endsection
+@section('js')
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+        var table = $('.meals-table').DataTable({
+            lengthMenu: [[10, 25, 50, 100,-1], ['10','25','50','100','الكل']],
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('index_offers') }}",
+            columns: [
+                { data: 'DT_RowIndex', 'orderable': false, 'searchable': false },
+                {data: 'id', name: 'id'},
+                {data: 'name', name: 'name', orderable: true, searchable: true},
+                {data: 'pages_count', name: 'pages_count', orderable: true, searchable: true},
+                {data: 'note', name: 'note', orderable: true, searchable: true},
+                {data: 'user_id', name: 'user_id', orderable: true, searchable: true},
+                {data: 'created_at', name: 'created_at', orderable: true, searchable: true},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+            language: {
+                search: "",
+                searchPlaceholder: "اكتب للبحث",
+                zeroRecords: "لم يتم العثور على بيانات مطابقة",
+                infoFiltered: "(من إجمالي _MAX_ صفحات)",
+                infoEmpty:      "لا يوجد بيانات لعرضها",
+                loadingRecords: "جارٍ التحميل...",
+                emptyTable: "لا توجد بيانات لعرضها",
+                info: " صفحة _PAGE_ من اجمالي _PAGES_ صفحات",
+                lengthMenu: "_MENU_",
+                paginate: { first: "الأول", last: "الأخير", next: "التالي", previous: "السابق", },
+
+
+            },
+        });
+        });
+    </script>
+@endsection
