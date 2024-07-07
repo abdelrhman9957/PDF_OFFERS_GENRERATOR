@@ -7,15 +7,20 @@ use App\Http\Requests\StoreCityRequest;
 use App\Http\Requests\UpdateCityRequest;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\DB;
+
 
 
 class CityController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
+
+
         //dd(City::find(2)->bg_img);
         if ($request->ajax()) {
             $data = City::query()->select(['id', 'name', 'created_at','bg_img','bg_img_train']);
